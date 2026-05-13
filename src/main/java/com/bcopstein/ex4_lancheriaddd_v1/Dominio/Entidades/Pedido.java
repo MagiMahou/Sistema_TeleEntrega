@@ -76,4 +76,25 @@ public class Pedido {
     public double getValorCobrado() {
         return valorCobrado;
     }
+
+  
+    private void calcularValorDosItens() {
+        this.valor = this.itens.stream()
+            .mapToDouble(item -> item.getItem().getPreco() * item.getQuantidade())
+            .sum();
+    }
+
+    public void fecharCustoDoPedido(boolean isClienteFrequente) {
+        calcularValorDosItens();
+        this.desconto = isClienteFrequente ? (this.valor * 0.07) : 0.0;
+        this.impostos = this.valor * 0.10;
+        this.valorCobrado = (this.valor - this.desconto) + this.impostos;
+    }
+
+    public void aprovar() {
+        if (this.status != Status.NOVO) {
+            throw new IllegalStateException("Apenas pedidos com status NOVO podem ser aprovados.");
+        }
+        this.status = Status.APROVADO;
+    }
 }
