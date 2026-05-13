@@ -84,10 +84,11 @@ public class Pedido {
             .sum();
     }
 
-    public void fecharCustoDoPedido(boolean isClienteFrequente) {
+    public void fecharCustoDoPedido(double valorDesconto, double valorImposto) {
         calcularValorDosItens();
-        this.desconto = isClienteFrequente ? (this.valor * 0.07) : 0.0;
-        this.impostos = this.valor * 0.10;
+        
+        this.desconto = valorDesconto;
+        this.impostos = valorImposto;
         this.valorCobrado = (this.valor - this.desconto) + this.impostos;
     }
 
