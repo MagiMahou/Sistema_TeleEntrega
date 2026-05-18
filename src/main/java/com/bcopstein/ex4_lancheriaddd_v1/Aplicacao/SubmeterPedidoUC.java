@@ -1,80 +1,66 @@
 package com.bcopstein.ex4_lancheriaddd_v1.Aplicacao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.SubmeterPedidoRequest;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.PedidoResponse;
+import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.IPedidosRepository;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.ProdutosRepository;
-import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Cliente;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.ItemPedido;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Pedido;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Produto;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IAutenticacaoService;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IDescontoService;
-import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IImpostoService;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IEstoqueService;
-
-import java.time.LocalDateTime;
+import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IImpostoService;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class SubmeterPedidoUC {
     private final ProdutosRepository produtosRepository;
-    private final IAutenticacaoService authService;
     private final IEstoqueService estoqueService;
-    private final IDescontoService descontoService;
     private final IImpostoService impostoService;
+    private final IDescontoService descontoService;
+    private final IAutenticacaoService authService;
+    private final IPedidosRepository pedidosRepository;
 
-    @Autowired
-    public SubmeterPedidoUC(ProdutosRepository produtosRepository, 
-                            IAutenticacaoService authService,
-                            IEstoqueService estoqueService,
-                            IDescontoService descontoService,
-                            IImpostoService impostoService) {
+    public SubmeterPedidoUC(ProdutosRepository produtosRepository, IEstoqueService estoqueService,
+            IImpostoService impostoService, IDescontoService descontoService, IAutenticacaoService authService,
+            IPedidosRepository pedidosRepository) {
         this.produtosRepository = produtosRepository;
-        this.authService = authService;
         this.estoqueService = estoqueService;
-        this.descontoService = descontoService;
         this.impostoService = impostoService;
+        this.descontoService = descontoService;
+        this.authService = authService;
+        this.pedidosRepository = pedidosRepository;
     }
 
     public PedidoResponse run(SubmeterPedidoRequest request) {
         if (!authService.isAutenticado(request.token())) {
-            throw new SecurityException("Cliente não autenticado no sistema.");
+            throw new SecurityException("Acesso negado");
         }
 
-        Cliente cliente = new Cliente(request.cpfCliente(), "Gabriel Tavares", "519999999", request.enderecoEntrega(), "gabriel@pucrs.br");
-
-        List<ItemPedido> itens = request.itens().stream().map(req -> {
-            Produto prod = produtosRepository.recuperaProdutoPorid(req.produtoId());
-            if (prod == null) throw new IllegalArgumentException("Produto inválido: " + req.produtoId());
-            return new ItemPedido(prod, req.quantidade());
-        }).collect(Collectors.toList());
-
-        long idGerado = System.currentTimeMillis();
-        Pedido pedido = new Pedido(idGerado, cliente, LocalDateTime.now(), itens, Pedido.Status.NOVO, 0, 0, 0, 0);
-
-        if (!estoqueService.verificarDisponibilidade(pedido)) {
-            throw new IllegalStateException("Pedido rejeitado: Ingredientes insuficientes no estoque.");
+        List<ItemPedido> itens = new ArrayList<>();
+        for (var itemReq : request.itens()) {
+            Produto produto = produtosRepository.recuperaPorId(itemReq.produtoId());
+            if (produto == null) {
+                throw new IllegalArgumentException("Produto não encontrado");
+            }
+            if (!estoqueService.disponivel(produto.getId(), itemReq.quantidade())) {
+                throw new IllegalArgumentException("Estoque insuficiente");
+            }
+            itens.add(new ItemPedido(produto, itemReq.quantidade(), produto.getPreco()));
         }
 
-        double valorImposto = impostoService.calcularImposto(pedido);
-        double valorDesconto = descontoService.calcularDesconto(pedido);
-     
-        pedido.fecharCustoDoPedido(valorDesconto, valorImposto);
-        pedido.aprovar();
+        Pedido pedido = new Pedido(System.currentTimeMillis(), request.cpfCliente(), itens);
 
+        double imposto = impostoService.calcularImposto(pedido);
+        double desconto = descontoService.calcularDesconto(pedido);
+        pedido.fecharCustoDoPedido(desconto, imposto);
+        pedido.setStatus(Pedido.Status.RECEBIDO);
 
-        return new PedidoResponse(
-            pedido.getId(),
-            pedido.getStatus().name(),
-            pedido.getValor(),
-            pedido.getDesconto(),
-            pedido.getImpostos(),
-            pedido.getValorCobrado(),
-            pedido.getCliente().getEndereco()
-        );
+        pedidosRepository.salvar(pedido);
+
+        return new PedidoResponse(pedido.getId(), pedido.getStatus().name(), pedido.getValor(), desconto, imposto, pedido.getValorCobrado(), request.enderecoEntrega());
     }
 }

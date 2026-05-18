@@ -1,21 +1,32 @@
 package com.bcopstein.ex4_lancheriaddd_v1.Aplicacao;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.CabecalhoCardapioResponse;
-import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.CardapioService;
+import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.CardapioRepository;
+import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IAutenticacaoService;
 
 @Component
 public class RecuperaListaCardapiosUC {
-    private CardapioService cardapioService;
+    private final CardapioRepository cardapioRepository;
+    private final IAutenticacaoService authService; // Novo serviço de autenticação
 
     @Autowired
-    public RecuperaListaCardapiosUC(CardapioService cardapioService){
-        this.cardapioService = cardapioService;
+    public RecuperaListaCardapiosUC(CardapioRepository cardapioRepository, IAutenticacaoService authService) {
+        this.cardapioRepository = cardapioRepository;
+        this.authService = authService;
     }
 
-    public CabecalhoCardapioResponse run(){
-        return new CabecalhoCardapioResponse(cardapioService.recuperaListaDeCardapios());
-    }    
+    public List<CabecalhoCardapioResponse> run(String token) {
+        if (!authService.isAutenticado(token)) {
+            throw new SecurityException("Acesso negado: Cliente não autenticado.");
+        }
+
+        return cardapioRepository.cardapiosDisponiveis()
+            .stream()
+            .map(c -> new CabecalhoCardapioResponse(c.id(), c.titulo()))
+            .toList();
+    }
 }

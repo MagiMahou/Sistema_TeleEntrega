@@ -62,6 +62,7 @@ public class Pedido {
     }
 
     public double getValor() {
+        calcularValorDosItens(); 
         return valor;
     }
 

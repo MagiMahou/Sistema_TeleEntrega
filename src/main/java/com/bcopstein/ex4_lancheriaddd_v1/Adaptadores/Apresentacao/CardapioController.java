@@ -1,56 +1,57 @@
 package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao.Presenters.CabecalhoCardapioPresenter;
-import com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao.Presenters.CardapioPresenter;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperaListaCardapiosUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperarCardapioUC;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.CabecalhoCardapioResponse;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.CardapioResponse;
-import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Produto;
 
 @RestController
 @RequestMapping("/cardapio")
 public class CardapioController {
-    private RecuperarCardapioUC recuperaCardapioUC;
-    private RecuperaListaCardapiosUC recuperaListaCardapioUC;
+    private RecuperaListaCardapiosUC recuperaListaCardapiosUC;
+    private RecuperarCardapioUC recuperarCardapioUC;
 
-    public CardapioController(RecuperarCardapioUC recuperaCardapioUC,
-                              RecuperaListaCardapiosUC recuperaListaCardapioUC) {
-        this.recuperaCardapioUC = recuperaCardapioUC;
-        this.recuperaListaCardapioUC = recuperaListaCardapioUC;
-    }
-
-    @GetMapping("/{id}")
-    @CrossOrigin("*")
-    public CardapioPresenter recuperaCardapio(@PathVariable(value="id")long id){
-        CardapioResponse cardapioResponse = recuperaCardapioUC.run(id);
-        Set<Long> conjIdSugestoes = new HashSet<>(cardapioResponse.getSugestoesDoChef().stream()
-            .map(produto->produto.getId())
-            .toList());
-        CardapioPresenter cardapioPresenter = new CardapioPresenter(cardapioResponse.getCardapio().getCabecalhoCardapio().titulo());
-        for(Produto produto:cardapioResponse.getCardapio().getProdutos()){
-            boolean sugestao = conjIdSugestoes.contains(produto.getId());
-            cardapioPresenter.insereItem(produto.getId(), produto.getDescricao(), produto.getPreco(), sugestao);
-        }
-        return cardapioPresenter;
+    @Autowired
+    public CardapioController(RecuperaListaCardapiosUC recuperaListaCardapiosUC,
+            RecuperarCardapioUC recuperarCardapioUC) {
+        this.recuperaListaCardapiosUC = recuperaListaCardapiosUC;
+        this.recuperarCardapioUC = recuperarCardapioUC;
     }
 
     @GetMapping("/lista")
     @CrossOrigin("*")
-    public List<CabecalhoCardapioPresenter> recuperaListaCardapios(){
-         List<CabecalhoCardapioPresenter> lstCardapios = 
-            recuperaListaCardapioUC.run().cabecalhos().stream()
-            .map(cabCar -> new CabecalhoCardapioPresenter(cabCar.id(),cabCar.titulo()))
-            .toList();
-         return lstCardapios;
+    public ResponseEntity<List<CabecalhoCardapioResponse>> recuperaLista(
+            @RequestHeader(value = "token", required = false) String token) {
+        try {
+            return ResponseEntity.ok(recuperaListaCardapiosUC.run(token));
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    @CrossOrigin("*")
+    public ResponseEntity<CardapioResponse> recuperaCardapio(
+            @PathVariable long id, 
+            @RequestHeader(value = "token", required = false) String token) {
+        try {
+            return ResponseEntity.ok(recuperarCardapioUC.run(id, token));
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
