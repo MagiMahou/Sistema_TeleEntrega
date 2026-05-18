@@ -11,8 +11,7 @@ import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IAutenticacaoService;
 @Component
 public class RecuperaListaCardapiosUC {
     private final CardapioRepository cardapioRepository;
-    private final IAutenticacaoService authService; // Novo serviço de autenticação
-
+    private final IAutenticacaoService authService; //
     @Autowired
     public RecuperaListaCardapiosUC(CardapioRepository cardapioRepository, IAutenticacaoService authService) {
         this.cardapioRepository = cardapioRepository;
