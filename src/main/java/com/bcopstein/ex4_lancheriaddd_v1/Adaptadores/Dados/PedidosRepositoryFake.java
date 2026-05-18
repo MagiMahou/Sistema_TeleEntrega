@@ -9,7 +9,6 @@ import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Pedido;
 @Repository
 public class PedidosRepositoryFake implements IPedidosRepository {
     private final List<Pedido> pedidos = new ArrayList<>();
-    private long nextId = 1;
 
     @Override
     public Pedido salvar(Pedido pedido) {
@@ -20,7 +19,7 @@ public class PedidosRepositoryFake implements IPedidosRepository {
     @Override
     public List<Pedido> recuperarPendentes() {
         return pedidos.stream()
-                .filter(p -> p.getStatus() == Pedido.Status.RECEBIDO || p.getStatus() == Pedido.Status.PREPARANDO)
+                .filter(p -> p.getStatus() == Pedido.Status.APROVADO || p.getStatus() == Pedido.Status.PREPARACAO)
                 .toList();
     }
 
