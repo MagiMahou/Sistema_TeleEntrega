@@ -3,6 +3,7 @@ package com.bcopstein.ex4_lancheriaddd_v1.Aplicacao;
 import org.springframework.stereotype.Component;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.SubmeterPedidoRequest;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.PedidoResponse;
+import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.IClientesRepository;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.IPedidosRepository;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.ProdutosRepository;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Cliente;
@@ -24,23 +25,34 @@ public class SubmeterPedidoUC {
     private final IDescontoService descontoService;
     private final IAutenticacaoService authService;
     private final IPedidosRepository pedidosRepository;
+    private final IClientesRepository clientesRepository; // <- Novo repositório injetado
 
     public SubmeterPedidoUC(ProdutosRepository produtosRepository, IEstoqueService estoqueService,
             IImpostoService impostoService, IDescontoService descontoService, IAutenticacaoService authService,
-            IPedidosRepository pedidosRepository) {
+            IPedidosRepository pedidosRepository, IClientesRepository clientesRepository) {
         this.produtosRepository = produtosRepository;
         this.estoqueService = estoqueService;
         this.impostoService = impostoService;
         this.descontoService = descontoService;
         this.authService = authService;
         this.pedidosRepository = pedidosRepository;
+        this.clientesRepository = clientesRepository;
     }
 
-    public PedidoResponse run(SubmeterPedidoRequest request) {
-        if (!authService.isAutenticado(request.token())) {
+    public PedidoResponse run(SubmeterPedidoRequest request, String token) {
+        if (!authService.isAutenticado(token)) {
             throw new SecurityException("Acesso negado");
         }
 
+        // 1. Puxa o cliente oficial do banco a partir da sessão logada
+        String cpfCliente = authService.extrairCpf(token);
+        Cliente cliente = clientesRepository.recuperarPorCpf(cpfCliente);
+        
+        if (cliente == null) {
+            throw new IllegalStateException("Cliente não encontrado na base de dados.");
+        }
+
+        // 2. Valida os itens do pedido
         List<ItemPedido> itens = new ArrayList<>();
         for (var itemReq : request.itens()) {
             Produto produto = produtosRepository.recuperaProdutoPorid(itemReq.produtoId());
@@ -50,7 +62,7 @@ public class SubmeterPedidoUC {
             itens.add(new ItemPedido(produto, itemReq.quantidade()));
         }
 
-        Cliente cliente = new Cliente(request.cpfCliente(), "Cliente", "", request.enderecoEntrega(), "");
+        // 3. Monta o pedido usando o endereço oficial do cliente
         Pedido pedido = new Pedido(System.currentTimeMillis(), cliente, null, itens, Pedido.Status.NOVO, 0.0, 0.0, 0.0, 0.0);
 
         if (!estoqueService.verificarDisponibilidade(pedido)) {
@@ -64,6 +76,7 @@ public class SubmeterPedidoUC {
 
         pedidosRepository.salvar(pedido);
 
-        return new PedidoResponse(pedido.getId(), pedido.getStatus().name(), pedido.getValor(), desconto, imposto, pedido.getValorCobrado(), request.enderecoEntrega());
+        // 4. Retorna a resposta (agora usamos getEndereco() diretamente do cliente)
+        return new PedidoResponse(pedido.getId(), pedido.getStatus().name(), pedido.getValor(), desconto, imposto, pedido.getValorCobrado(), cliente.getEndereco());
     }
 }

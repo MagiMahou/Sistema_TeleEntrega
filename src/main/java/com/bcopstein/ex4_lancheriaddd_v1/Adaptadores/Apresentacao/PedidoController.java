@@ -24,13 +24,15 @@ public class PedidoController {
 
     @PostMapping("/submeter")
     @CrossOrigin("*")
-    public ResponseEntity<Object> submeterPedido(@RequestBody SubmeterPedidoRequest request) {
+    public ResponseEntity<Object> submeterPedido(
+            @RequestBody SubmeterPedidoRequest request,
+            @RequestHeader(value = "token", required = false) String token) { // Exigindo o token no envio
         try {
-            PedidoResponse response = submeterPedidoUC.run(request);
+            PedidoResponse response = submeterPedidoUC.run(request, token); // Passando o token para frente
             return ResponseEntity.ok(response);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
