@@ -8,6 +8,7 @@ import java.util.List;
 public class Receita {
     @Id
     private long id;
+    private String titulo; 
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -16,14 +17,15 @@ public class Receita {
         inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
     )
     private List<Ingrediente> ingredientes;
-
     protected Receita() {}
 
-    public Receita(long id, List<Ingrediente> ingredientes) {
+    public Receita(long id, String titulo, List<Ingrediente> ingredientes) {
         this.id = id;
+        this.titulo = titulo;
         this.ingredientes = ingredientes;
     }
 
     public long getId() { return id; }
+    public String getTitulo() { return titulo; }
     public List<Ingrediente> getIngredientes() { return ingredientes; }
 }

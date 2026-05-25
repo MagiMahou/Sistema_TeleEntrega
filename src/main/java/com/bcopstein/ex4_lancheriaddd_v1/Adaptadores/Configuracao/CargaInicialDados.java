@@ -19,7 +19,7 @@ public class CargaInicialDados implements CommandLineRunner {
         System.out.println("--- INICIANDO CARGA DE DADOS PARA TESTES ---");
 
         if (clientesRepository.recuperarPorEmail("gabriel@email.com") == null) {
-            // Construtor correto com os 6 parâmetros exigidos pela tua classe Cliente
+    
             Cliente cliente = new Cliente(
                 "12345678900", 
                 "Gabriel Tavares", 

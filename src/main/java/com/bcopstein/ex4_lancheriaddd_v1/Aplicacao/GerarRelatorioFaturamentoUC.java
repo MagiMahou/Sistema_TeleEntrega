@@ -22,8 +22,6 @@ public class GerarRelatorioFaturamentoUC {
         if (!authService.possuiPerfil(token, Perfil.ADMINISTRADOR)) {
             throw new SecurityException("Acesso negado: Perfil de Administrador exigido.");
         }
-
-        // Puxa a lista de pedidos pendentes da cozinha/entrega para somar o faturamento
         List<Pedido> pedidos = pedidosRepository.recuperarPendentes();
         
         int quantidade = 0;

@@ -6,13 +6,20 @@ spring:
     password:
   sql:
     init:
-      mode: always   # executa schema.sql no boot
+      mode: always  
     schema-locations: classpath:schema.sql
     data-locations: classpath:data.sql
   h2:
     console:
       enabled: true
       path: /h2
+  
+
+  jpa:
+    hibernate:
+      ddl-auto: none 
+    show-sql: true  
+
 logging:
   level:
     org:
@@ -24,7 +31,3 @@ application:
   name: ex4-lancheriaddd-v1
 server:
   port: 8080
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true 

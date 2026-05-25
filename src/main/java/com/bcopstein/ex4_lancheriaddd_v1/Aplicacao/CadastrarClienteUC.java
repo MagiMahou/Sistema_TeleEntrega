@@ -21,7 +21,15 @@ public class CadastrarClienteUC {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
         
-        Cliente cliente = new Cliente(request.cpf(), request.nome(), request.email(), request.endereco(), request.senha());
+        Cliente cliente = new Cliente(
+            request.cpf(), 
+            request.nome(), 
+            request.celular(), 
+            request.endereco(), 
+            request.email(), 
+            request.senha()
+        );
+        
         clientesRepository.salvar(cliente);
     }
 }
