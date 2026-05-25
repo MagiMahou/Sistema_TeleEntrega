@@ -1,8 +1,21 @@
 package com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "itensEstoque")
 public class ItemEstoque {
-    private Ingrediente ingrediente;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private int quantidade;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ingrediente_id")
+    private Ingrediente ingrediente;
+
+    protected ItemEstoque() {}
 
     public ItemEstoque(Ingrediente ingrediente, int quantidade) {
         this.ingrediente = ingrediente;

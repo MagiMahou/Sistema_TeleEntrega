@@ -1,10 +1,24 @@
 package com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "produtos")
 public class Produto {
+    @Id
     private long id;
     private String descricao;
-    private Receita receita;
     private double preco;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "produto_receita",
+        joinColumns = @JoinColumn(name = "produto_id"),
+        inverseJoinColumns = @JoinColumn(name = "receita_id")
+    )
+    private Receita receita;
+
+    protected Produto() {}
 
     public Produto(long id, String descricao, Receita receita, double preco) {
         this.id = id;

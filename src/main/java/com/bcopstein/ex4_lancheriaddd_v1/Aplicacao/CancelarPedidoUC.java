@@ -26,16 +26,12 @@ public class CancelarPedidoUC {
         if (pedido == null) {
             throw new IllegalArgumentException("Pedido não encontrado");
         }
-
-        // Regra de Negócio: Somente pedidos APROVADOS (e não pagos) podem ser cancelados
         if (pedido.getStatus() != Pedido.Status.APROVADO) {
             throw new IllegalStateException("Apenas pedidos aprovados e aguardando pagamento podem ser cancelados.");
         }
 
         pedido.setStatus(Pedido.Status.CANCELADO);
         pedidosRepository.atualizar(pedido);
-
-        // Retorna o pedido atualizado
         return new PedidoResponse(pedido.getId(), pedido.getStatus().name(), pedido.getValor(), 
                                   pedido.getDesconto(), pedido.getImpostos(), pedido.getValorCobrado(), "");
     }

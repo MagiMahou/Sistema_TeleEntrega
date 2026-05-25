@@ -4,4 +4,5 @@ import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Pedido;
 
 public interface IEstoqueService {
     boolean verificarDisponibilidade(Pedido pedido);
+    void abaterEstoque(Pedido pedido);
 }

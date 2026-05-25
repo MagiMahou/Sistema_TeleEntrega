@@ -26,7 +26,7 @@ public class SubmeterPedidoUC {
     private final IDescontoService descontoService;
     private final IAutenticacaoService authService;
     private final IPedidosRepository pedidosRepository;
-    private final IClientesRepository clientesRepository; // <- Novo repositório injetado
+    private final IClientesRepository clientesRepository;
 
     public SubmeterPedidoUC(ProdutosRepository produtosRepository, IEstoqueService estoqueService,
             IImpostoService impostoService, IDescontoService descontoService, IAutenticacaoService authService,
@@ -42,8 +42,8 @@ public class SubmeterPedidoUC {
 
     public PedidoResponse run(SubmeterPedidoRequest request, String token) {
         if (!authService.possuiPerfil(token, Perfil.CLIENTE)) {
-             throw new SecurityException("Acesso negado: Perfil inválido.");
-}
+            throw new SecurityException("Acesso negado: Perfil inválido.");
+        }
 
         String cpfCliente = authService.extrairCpf(token);
         Cliente cliente = clientesRepository.recuperarPorCpf(cpfCliente);
@@ -52,7 +52,6 @@ public class SubmeterPedidoUC {
             throw new IllegalStateException("Cliente não encontrado na base de dados.");
         }
 
-       
         List<ItemPedido> itens = new ArrayList<>();
         for (var itemReq : request.itens()) {
             Produto produto = produtosRepository.recuperaProdutoPorid(itemReq.produtoId());
@@ -65,13 +64,14 @@ public class SubmeterPedidoUC {
         Pedido pedido = new Pedido(System.currentTimeMillis(), cliente, null, itens, Pedido.Status.NOVO, 0.0, 0.0, 0.0, 0.0);
 
         if (!estoqueService.verificarDisponibilidade(pedido)) {
-            throw new IllegalArgumentException("Estoque insuficiente");
+            throw new IllegalArgumentException("Estoque insuficiente para os ingredientes da receita.");
         }
 
         double imposto = impostoService.calcularImposto(pedido);
         double desconto = descontoService.calcularDesconto(pedido);
         pedido.fecharCustoDoPedido(desconto, imposto);
         pedido.aprovar();
+        estoqueService.abaterEstoque(pedido);
 
         pedidosRepository.salvar(pedido);
 
