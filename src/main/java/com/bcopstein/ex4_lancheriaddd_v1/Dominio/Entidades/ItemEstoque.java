@@ -11,5 +11,15 @@ public class ItemEstoque {
 
     public Ingrediente getIngrediente() { return ingrediente; }
     public int getQuantidade() { return quantidade; }
-    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+
+    public void reduzirQuantidade(int qtd) {
+        if (this.quantidade < qtd) {
+            throw new IllegalArgumentException("Quantidade insuficiente de: " + ingrediente.getDescricao());
+        }
+        this.quantidade -= qtd;
+    }
+
+    public void adicionarQuantidade(int qtd) {
+        this.quantidade += qtd;
+    }
 }

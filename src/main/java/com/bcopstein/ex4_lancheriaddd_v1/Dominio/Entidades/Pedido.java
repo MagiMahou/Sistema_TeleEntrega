@@ -4,21 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Pedido {
-    public enum Status {
-        NOVO,
-        APROVADO,
-        CANCELADO,
-        PAGO,
-        AGUARDANDO,
-        PREPARACAO,
-        PRONTO,
-        TRANSPORTE,
-        ENTREGUE
+    public enum Status { 
+        NOVO, APROVADO, PAGO, AGUARDANDO, PREPARACAO, PRONTO, TRANSPORTE, ENTREGUE, CANCELADO 
     }
-   
+
     private long id;
     private Cliente cliente;
-    private LocalDateTime dataHoraPagamento;
+    private LocalDateTime data_hora_pagamento;
     private List<ItemPedido> itens;
     private Status status;
     private double valor;
@@ -26,11 +18,11 @@ public class Pedido {
     private double desconto;
     private double valorCobrado;
 
-    public Pedido(long id, Cliente cliente, LocalDateTime dataHoraPagamento, List<ItemPedido> itens,
-            Pedido.Status status, double valor, double impostos, double desconto, double valorCobrado) {
+    public Pedido(long id, Cliente cliente, LocalDateTime data_hora_pagamento, List<ItemPedido> itens, 
+                  Status status, double valor, double impostos, double desconto, double valorCobrado) {
         this.id = id;
         this.cliente = cliente;
-        this.dataHoraPagamento = dataHoraPagamento;
+        this.data_hora_pagamento = data_hora_pagamento;
         this.itens = itens;
         this.status = status;
         this.valor = valor;
@@ -39,66 +31,37 @@ public class Pedido {
         this.valorCobrado = valorCobrado;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public LocalDateTime getDataHoraPagamento() {
-        return dataHoraPagamento;
-    }
-
-    public List<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status){
-        this.status = status;
-    }
-
-    public double getValor() {
-        calcularValorDosItens(); 
-        return valor;
-    }
-
-    public double getImpostos() {
-        return impostos;
-    }
-
-    public double getDesconto() {
-        return desconto;
-    }
-
-    public double getValorCobrado() {
-        return valorCobrado;
-    }
-
-  
-    private void calcularValorDosItens() {
-        this.valor = this.itens.stream()
-            .mapToDouble(item -> item.getItem().getPreco() * item.getQuantidade())
-            .sum();
-    }
-
-    public void fecharCustoDoPedido(double valorDesconto, double valorImposto) {
-        calcularValorDosItens();
-        
-        this.desconto = valorDesconto;
-        this.impostos = valorImposto;
-        this.valorCobrado = (this.valor - this.desconto) + this.impostos;
+    public void fecharCustoDoPedido(double descontoAplicado, double impostoAplicado) {
+        this.valor = 0.0;
+        for (ItemPedido item : itens) {
+            this.valor += (item.getProduto().getPreco() * item.getQuantidade());
+        }
+        this.desconto = descontoAplicado;
+        this.impostos = impostoAplicado;
+        this.valorCobrado = this.valor + this.impostos - this.desconto;
     }
 
     public void aprovar() {
         if (this.status != Status.NOVO) {
-            throw new IllegalStateException("Apenas pedidos com status NOVO podem ser aprovados.");
+            throw new IllegalStateException("Apenas pedidos NOVOS podem ser aprovados.");
         }
         this.status = Status.APROVADO;
     }
+
+    public void registrarPagamento() {
+        this.status = Status.PAGO;
+        this.data_hora_pagamento = LocalDateTime.now();
+    }
+
+    public long getId() { return id; }
+    public Cliente getCliente() { return cliente; }
+    public LocalDateTime getDataHoraPagamento() { return data_hora_pagamento; }
+    public List<ItemPedido> getItens() { return itens; }
+    public Status getStatus() { return status; }
+    public double getValor() { return valor; }
+    public double getImpostos() { return impostos; }
+    public double getDesconto() { return desconto; }
+    public double getValorCobrado() { return valorCobrado; }
+
+    public void setStatus(Status status) { this.status = status; }
 }
