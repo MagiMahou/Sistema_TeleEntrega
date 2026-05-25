@@ -16,10 +16,10 @@ public class PedidosRepositoryFake implements IPedidosRepository {
         return pedido;
     }
 
-    @Override
+   @Override
     public List<Pedido> recuperarPendentes() {
         return pedidos.stream()
-                .filter(p -> p.getStatus() == Pedido.Status.APROVADO || p.getStatus() == Pedido.Status.PAGO || p.getStatus() == Pedido.Status.PREPARACAO)
+                .filter(p -> p.getStatus() == Pedido.Status.PAGO || p.getStatus() == Pedido.Status.PREPARACAO)
                 .toList();
     }
 
