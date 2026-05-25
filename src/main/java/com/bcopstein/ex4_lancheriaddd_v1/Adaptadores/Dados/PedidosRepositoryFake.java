@@ -24,6 +24,13 @@ public class PedidosRepositoryFake implements IPedidosRepository {
     }
 
     @Override
+    public List<Pedido> recuperarProntosParaEntrega() {
+        return pedidos.stream()
+                .filter(p -> p.getStatus() == Pedido.Status.PRONTO)
+                .toList();
+    }
+
+    @Override
     public Pedido recuperarPorId(long id) {
         return pedidos.stream()
                 .filter(p -> p.getId() == id)

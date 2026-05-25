@@ -3,8 +3,8 @@ package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperaPedidosPendentesUC;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.AtualizaStatusPedidoUC;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperaPedidosProntosUC;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.ConfirmarEntregaUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.AutenticarFuncionarioUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.LoginRequest;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.LoginResponse;
@@ -12,17 +12,17 @@ import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.PedidoResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cozinha")
-public class CozinhaController {
-    private final RecuperaPedidosPendentesUC recuperaPedidosPendentesUC;
-    private final AtualizaStatusPedidoUC atualizaStatusPedidoUC;
+@RequestMapping("/entregador")
+public class EntregadorController {
+    private final RecuperaPedidosProntosUC recuperaPedidosProntosUC;
+    private final ConfirmarEntregaUC confirmarEntregaUC;
     private final AutenticarFuncionarioUC autenticarFuncionarioUC;
 
-    public CozinhaController(RecuperaPedidosPendentesUC recuperaPedidosPendentesUC,
-                             AtualizaStatusPedidoUC atualizaStatusPedidoUC,
-                             AutenticarFuncionarioUC autenticarFuncionarioUC) {
-        this.recuperaPedidosPendentesUC = recuperaPedidosPendentesUC;
-        this.atualizaStatusPedidoUC = atualizaStatusPedidoUC;
+    public EntregadorController(RecuperaPedidosProntosUC recuperaPedidosProntosUC,
+                                ConfirmarEntregaUC confirmarEntregaUC,
+                                AutenticarFuncionarioUC autenticarFuncionarioUC) {
+        this.recuperaPedidosProntosUC = recuperaPedidosProntosUC;
+        this.confirmarEntregaUC = confirmarEntregaUC;
         this.autenticarFuncionarioUC = autenticarFuncionarioUC;
     }
 
@@ -39,28 +39,29 @@ public class CozinhaController {
 
     @GetMapping("/pedidos")
     @CrossOrigin("*")
-    public ResponseEntity<Object> getPedidosPendentes(@RequestHeader(value = "token", required = false) String token) {
+    public ResponseEntity<Object> getPedidosProntos(@RequestHeader(value = "token", required = false) String token) {
         try {
-            List<PedidoResponse> pedidos = recuperaPedidosPendentesUC.run(token);
+            List<PedidoResponse> pedidos = recuperaPedidosProntosUC.run(token);
             return ResponseEntity.ok(pedidos);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
-    @PatchMapping("/pedidos/{id}/status")
+    @PatchMapping("/pedidos/{id}/entregar")
     @CrossOrigin("*")
-    public ResponseEntity<Object> atualizarStatus(
+    public ResponseEntity<Object> confirmarEntrega(
             @PathVariable long id,
-            @RequestParam String status,
             @RequestHeader(value = "token", required = false) String token) {
         try {
-            PedidoResponse pedido = atualizaStatusPedidoUC.run(id, status, token);
+            PedidoResponse pedido = confirmarEntregaUC.run(id, token);
             return ResponseEntity.ok(pedido);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

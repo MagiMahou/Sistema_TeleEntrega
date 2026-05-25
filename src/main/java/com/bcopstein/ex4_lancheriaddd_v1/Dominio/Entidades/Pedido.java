@@ -15,6 +15,7 @@ public class Pedido {
         TRANSPORTE,
         ENTREGUE
     }
+   
     private long id;
     private Cliente cliente;
     private LocalDateTime dataHoraPagamento;

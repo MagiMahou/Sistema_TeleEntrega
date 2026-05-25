@@ -26,9 +26,9 @@ public class PedidoController {
     @CrossOrigin("*")
     public ResponseEntity<Object> submeterPedido(
             @RequestBody SubmeterPedidoRequest request,
-            @RequestHeader(value = "token", required = false) String token) { // Exigindo o token no envio
+            @RequestHeader(value = "token", required = false) String token) { 
         try {
-            PedidoResponse response = submeterPedidoUC.run(request, token); // Passando o token para frente
+            PedidoResponse response = submeterPedidoUC.run(request, token); 
             return ResponseEntity.ok(response);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
