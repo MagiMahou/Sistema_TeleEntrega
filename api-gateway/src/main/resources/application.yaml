@@ -1,0 +1,37 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        - id: currency-conversion
+          uri: lb://currency-conversion
+          predicates:
+            - Path=/convert/**
+          filters:
+            - RewritePath=/convert/?(?<resto>.*), /currency-conversion-feign/$\{resto}
+        - id: currency-exchange
+          uri: lb://currency-exchange
+          predicates:
+            - Path=/convertionrate/**
+          filters:
+            - RewritePath=/convertionrate/?(?<resto>.*), /currency-exchange/$\{resto}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://fantastic-acorn-jjqj4v9jqgx2rqv-8761.app.github.dev/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true

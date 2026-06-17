@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"name": "Sistema_TeleEntrega",
+			"path": "../../../../../.."
+		},
+		{
+			"path": "../../../../../../api-gateway"
+		},
+		{
+			"path": "../../../../../../currency-conversion-service"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}
