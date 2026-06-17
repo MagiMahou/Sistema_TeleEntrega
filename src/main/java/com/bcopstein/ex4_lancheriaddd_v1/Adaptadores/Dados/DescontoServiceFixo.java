@@ -10,4 +10,18 @@ public class DescontoServiceFixo implements IDescontoService {
     public double calcularDesconto(Pedido pedido) {
         return pedido.getValor() * 0.07;
     }
+
+    @Override
+    public java.util.List<String> listarPoliticasDisponiveis() {
+        return java.util.Collections.emptyList();
+    }
+
+    @Override
+    public void definirPoliticaCorrente(String codigo) {
+    }
+
+    @Override
+    public String getPoliticaCorrente() {
+        return "Fixo";
+    }
 }
