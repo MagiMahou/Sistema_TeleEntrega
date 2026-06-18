@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  naming-server:
+    build:
+      context: ./naming-server
+    ports:
+      - "8761:8761"
+    container_name: naming-server
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    ports:
+      - "8765:8765"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    container_name: api-gateway
+
+  pizzaria-service:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    container_name: pizzaria-service
+
+  estoque-service:
+    build:
+      context: ./estoque-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+    container_name: estoque-service

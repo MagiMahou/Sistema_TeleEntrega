@@ -15,7 +15,10 @@ spring:
           uri: lb://pizzaria-service
           predicates:
             - Path=/clientes/**, /pedidos/**, /cardapio/**, /admin/**, /cozinha/**, /entrega/**
-
+        - id: estoque-service
+          uri: lb://estoque-service
+          predicates:
+            - Path=/estoque/**
 eureka:
   client:
     serviceUrl:
