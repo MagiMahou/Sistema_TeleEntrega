@@ -6,29 +6,20 @@ import jakarta.persistence.*;
 @Table(name = "produtos")
 public class Produto {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String descricao;
     private double preco;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "produto_receita",
-        joinColumns = @JoinColumn(name = "produto_id"),
-        inverseJoinColumns = @JoinColumn(name = "receita_id")
-    )
-    private Receita receita;
-
     protected Produto() {}
 
-    public Produto(long id, String descricao, Receita receita, double preco) {
+    public Produto(long id, String descricao, double preco) {
         this.id = id;
         this.descricao = descricao;
-        this.receita = receita;
         this.preco = preco;
     }
 
     public long getId() { return id; }
     public String getDescricao() { return descricao; }
-    public Receita getReceita() { return receita; }
     public double getPreco() { return preco; }
 }

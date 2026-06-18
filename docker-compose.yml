@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    container_name: rabbitmq
+
   naming-server:
     build:
       context: ./naming-server
@@ -19,17 +26,6 @@ services:
       - naming-server
     container_name: api-gateway
 
-  pizzaria-service:
-    build:
-      context: .
-    ports:
-      - "8080:8080"
-    environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
-    depends_on:
-      - naming-server
-    container_name: pizzaria-service
-
   estoque-service:
     build:
       context: ./estoque-service
@@ -40,3 +36,28 @@ services:
     depends_on:
       - naming-server
     container_name: estoque-service
+
+  pizzaria-service:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    depends_on:
+      - naming-server
+      - rabbitmq
+    container_name: pizzaria-service
+
+  entregas-service:
+    build:
+      context: ./entregas-service
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - naming-server
+      - rabbitmq
+    container_name: entregas-service
