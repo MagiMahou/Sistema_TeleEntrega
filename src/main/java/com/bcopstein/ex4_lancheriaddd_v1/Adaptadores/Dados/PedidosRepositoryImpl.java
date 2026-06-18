@@ -25,17 +25,12 @@ public class PedidosRepositoryImpl implements IPedidosRepository {
 
     @Override
     public List<Pedido> recuperarPendentes() {
-        // Mock implementation, would need specific JPA query normally
-        return pedidoJpaRepository.findAll().stream()
-                .filter(p -> p.getStatus() == Pedido.Status.NOVO)
-                .toList();
+        return pedidoJpaRepository.findByStatus(Pedido.Status.PAGO);
     }
 
     @Override
     public List<Pedido> recuperarProntosParaEntrega() {
-        return pedidoJpaRepository.findAll().stream()
-                .filter(p -> p.getStatus() == Pedido.Status.PRONTO)
-                .toList();
+        return pedidoJpaRepository.findByStatus(Pedido.Status.PRONTO);
     }
 
     @Override

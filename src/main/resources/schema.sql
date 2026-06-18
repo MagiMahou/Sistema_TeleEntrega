@@ -16,18 +16,17 @@ CREATE TABLE produtos (
 CREATE TABLE pedidos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     cliente_cpf VARCHAR(11),
-    data TIMESTAMP,
     data_hora_pagamento TIMESTAMP,
     status VARCHAR(50),
-    valor INT,
-    desconto INT,
-    impostos INT,
-    valor_cobrado INT,
-    endereco_entrega VARCHAR(255),
+    valor DOUBLE,
+    desconto DOUBLE,
+    impostos DOUBLE,
+    valor_cobrado DOUBLE,
     FOREIGN KEY (cliente_cpf) REFERENCES clientes(cpf)
 );
 
 CREATE TABLE itens_pedido (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     pedido_id BIGINT,
     produto_id BIGINT,
     quantidade INT,
