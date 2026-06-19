@@ -12,7 +12,7 @@ import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IAutenticacaoService;
 public class AtualizaStatusPedidoUC {
     private final IPedidosRepository pedidosRepository;
     private final IAutenticacaoService authService;
-    private final RabbitTemplate rabbitTemplate;!
+    private final RabbitTemplate rabbitTemplate;
 
     public AtualizaStatusPedidoUC(IPedidosRepository pedidosRepository, IAutenticacaoService authService, RabbitTemplate rabbitTemplate) {
         this.pedidosRepository = pedidosRepository;
