@@ -68,6 +68,7 @@ com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ListarPedidosClienteEntreDatasUC.cla
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\AutenticacaoServiceFake$Sessao.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Apresentacao\ClienteController.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\Descontos\DescontoPromocaoVerao.class
+com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Mensageria\PedidoEntregueListener.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\Impostos\ImpostoLei100.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\DescontoServiceImpl.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\AutenticacaoServiceFake.class
