@@ -1,0 +1,61 @@
+.kitchen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.kitchen-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-left: 5px solid var(--info);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.kitchen-card.border-warning {
+  border-left: 5px solid var(--warning);
+}
+
+.kitchen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kitchen-header h3 {
+  font-size: 20px;
+}
+
+.kitchen-body ul {
+  list-style: none;
+  padding: 15px;
+  background: #F9F9F9;
+  border-radius: 10px;
+}
+
+.kitchen-body li {
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: var(--text-dark);
+}
+.kitchen-body li:last-child {
+  margin-bottom: 0;
+}
+
+.kitchen-actions {
+  margin-top: auto;
+}
+
+.btn-warning {
+  background: var(--warning);
+  color: #000;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.btn-warning:hover {
+  background: #e6ae06;
+}

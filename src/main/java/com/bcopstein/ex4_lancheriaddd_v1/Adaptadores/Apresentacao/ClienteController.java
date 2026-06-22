@@ -4,20 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.CadastrarClienteUC;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.AutenticarClienteUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.CadastrarClienteRequest;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.LoginRequest;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.LoginResponse;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
     private final CadastrarClienteUC cadastrarClienteUC;
-    private final AutenticarClienteUC autenticarClienteUC;
+    private final com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.ValidarLoginUC validarLoginUC;
 
-    public ClienteController(CadastrarClienteUC cadastrarClienteUC, AutenticarClienteUC autenticarClienteUC) {
+    public ClienteController(CadastrarClienteUC cadastrarClienteUC, com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.ValidarLoginUC validarLoginUC) {
         this.cadastrarClienteUC = cadastrarClienteUC;
-        this.autenticarClienteUC = autenticarClienteUC;
+        this.validarLoginUC = validarLoginUC;
     }
 
     @PostMapping("/cadastro")
@@ -31,14 +28,15 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/validar-login")
     @CrossOrigin("*")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<Object> validarLogin(@RequestBody com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.ValidarLoginRequest request) {
         try {
-            LoginResponse response = autenticarClienteUC.run(request);
+            com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.ValidarLoginResponse response = validarLoginUC.run(request);
             return ResponseEntity.ok(response);
-        } catch (SecurityException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
 }

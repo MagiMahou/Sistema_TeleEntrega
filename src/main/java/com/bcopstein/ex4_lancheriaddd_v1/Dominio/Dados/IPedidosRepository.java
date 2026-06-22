@@ -7,7 +7,6 @@ import java.util.List;
 public interface IPedidosRepository {
     Pedido salvar(Pedido pedido);
     List<Pedido> recuperarPendentes();
-    List<Pedido> recuperarProntosParaEntrega();
     Pedido recuperarPorId(long id);
     Pedido atualizar(Pedido pedido);
     List<Pedido> recuperarEntreguesEntreDatas(LocalDateTime inicio, LocalDateTime fim);

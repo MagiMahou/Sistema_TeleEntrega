@@ -1,0 +1,117 @@
+.login-wrapper {
+  background-image: radial-gradient(circle at top left, #FFE8CD 0%, transparent 40%),
+    radial-gradient(circle at bottom right, #E2F0CB 0%, transparent 40%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+  width: 800px;
+  max-width: 100%;
+  min-height: 500px;
+  height: auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.login-image {
+  flex: 1;
+  background: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+  position: relative;
+}
+
+.login-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba(255, 138, 0, 0.2), transparent);
+}
+
+.login-form-wrapper {
+  flex: 1;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--white);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h1 {
+  font-size: 32px;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+p.subtitle {
+  color: var(--text-light);
+  margin-bottom: 40px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 15px 20px;
+  border: 1px solid #EBEBEB;
+  border-radius: 15px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s ease;
+  background: #F9F9F9;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255, 138, 0, 0.1);
+}
+
+.btn {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 698px) {
+  .login-container {
+    flex-direction: column;
+    height: center;
+  }
+
+  .login-image {
+    height: 200px;
+  }
+}

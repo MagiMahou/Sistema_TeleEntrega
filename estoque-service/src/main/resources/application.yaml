@@ -5,13 +5,17 @@ spring:
   application:
     name: estoque-service
   datasource:
-    url: jdbc:h2:mem:estoquedb
+    url: jdbc:h2:file:/app/dados/estoquedb
     driverClassName: org.h2.Driver
     username: sa
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
     hibernate:
       ddl-auto: update
     show-sql: true

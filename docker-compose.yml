@@ -33,6 +33,8 @@ services:
       - "8081:8081"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
+    volumes:
+      - ./dados-estoque:/app/dados
     depends_on:
       - naming-server
     container_name: estoque-service
@@ -45,6 +47,8 @@ services:
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
       - SPRING_RABBITMQ_HOST=rabbitmq
+    volumes:
+      - ./dados-pizzaria:/app/dados
     depends_on:
       - naming-server
       - rabbitmq
@@ -53,12 +57,10 @@ services:
   entregas-service:
     build:
       context: ./entregas-service
-    ports:
-      - "8082:8082"
+      dockerfile: Dockerfile
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://naming-server:8761/eureka
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - naming-server
       - rabbitmq
-    container_name: entregas-service

@@ -1,0 +1,57 @@
+2026-06-19 19:44:18.479060Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 16:37:33.174278Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 16:40:58.198768Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 16:48:19.089483Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 16:48:19.111804Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUTOS" already exists; SQL statement:
+CREATE TABLE produtos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, descricao VARCHAR(255), preco INT ) [42101-224]
+2026-06-22 16:48:19.120067Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PEDIDOS" already exists; SQL statement:
+CREATE TABLE pedidos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, cliente_cpf VARCHAR(11), data_hora_pagamento TIMESTAMP, status VARCHAR(50), valor DOUBLE, desconto DOUBLE, impostos DOUBLE, valor_cobrado DOUBLE, FOREIGN KEY (cliente_cpf) REFERENCES clientes(cpf) ) [42101-224]
+2026-06-22 16:48:19.127690Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITENS_PEDIDO" already exists; SQL statement:
+CREATE TABLE itens_pedido ( id BIGINT AUTO_INCREMENT PRIMARY KEY, pedido_id BIGINT, produto_id BIGINT, quantidade INT, FOREIGN KEY (pedido_id) REFERENCES pedidos(id), FOREIGN KEY (produto_id) REFERENCES produtos(id) ) [42101-224]
+2026-06-22 18:38:40.644107Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 18:38:40.774668Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUTOS" already exists; SQL statement:
+CREATE TABLE produtos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, descricao VARCHAR(255), preco INT ) [42101-224]
+2026-06-22 18:38:40.784347Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PEDIDOS" already exists; SQL statement:
+CREATE TABLE pedidos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, cliente_cpf VARCHAR(11), data_hora_pagamento TIMESTAMP, status VARCHAR(50), valor DOUBLE, desconto DOUBLE, impostos DOUBLE, valor_cobrado DOUBLE, FOREIGN KEY (cliente_cpf) REFERENCES clientes(cpf) ) [42101-224]
+2026-06-22 18:38:40.804884Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITENS_PEDIDO" already exists; SQL statement:
+CREATE TABLE itens_pedido ( id BIGINT AUTO_INCREMENT PRIMARY KEY, pedido_id BIGINT, produto_id BIGINT, quantidade INT, FOREIGN KEY (pedido_id) REFERENCES pedidos(id), FOREIGN KEY (produto_id) REFERENCES produtos(id) ) [42101-224]
+2026-06-22 18:43:26.122820Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 18:43:26.205431Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUTOS" already exists; SQL statement:
+CREATE TABLE produtos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, descricao VARCHAR(255), preco INT ) [42101-224]
+2026-06-22 18:43:26.229477Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PEDIDOS" already exists; SQL statement:
+CREATE TABLE pedidos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, cliente_cpf VARCHAR(11), data_hora_pagamento TIMESTAMP, status VARCHAR(50), valor DOUBLE, desconto DOUBLE, impostos DOUBLE, valor_cobrado DOUBLE, FOREIGN KEY (cliente_cpf) REFERENCES clientes(cpf) ) [42101-224]
+2026-06-22 18:43:26.237691Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITENS_PEDIDO" already exists; SQL statement:
+CREATE TABLE itens_pedido ( id BIGINT AUTO_INCREMENT PRIMARY KEY, pedido_id BIGINT, produto_id BIGINT, quantidade INT, FOREIGN KEY (pedido_id) REFERENCES pedidos(id), FOREIGN KEY (produto_id) REFERENCES produtos(id) ) [42101-224]
+2026-06-22 18:48:05.938472Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENTES" already exists; SQL statement:
+CREATE TABLE clientes ( cpf VARCHAR(11) PRIMARY KEY, nome VARCHAR(255), celular VARCHAR(20), endereco VARCHAR(255), email VARCHAR(255), senha VARCHAR(255) ) [42101-224]
+2026-06-22 18:48:06.071749Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUTOS" already exists; SQL statement:
+CREATE TABLE produtos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, descricao VARCHAR(255), preco INT ) [42101-224]
+2026-06-22 18:48:06.105076Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PEDIDOS" already exists; SQL statement:
+CREATE TABLE pedidos ( id BIGINT AUTO_INCREMENT PRIMARY KEY, cliente_cpf VARCHAR(11), data_hora_pagamento TIMESTAMP, status VARCHAR(50), valor DOUBLE, desconto DOUBLE, impostos DOUBLE, valor_cobrado DOUBLE, FOREIGN KEY (cliente_cpf) REFERENCES clientes(cpf) ) [42101-224]
+2026-06-22 18:48:06.141904Z jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ITENS_PEDIDO" already exists; SQL statement:
+CREATE TABLE itens_pedido ( id BIGINT AUTO_INCREMENT PRIMARY KEY, pedido_id BIGINT, produto_id BIGINT, quantidade INT, FOREIGN KEY (pedido_id) REFERENCES pedidos(id), FOREIGN KEY (produto_id) REFERENCES produtos(id) ) [42101-224]

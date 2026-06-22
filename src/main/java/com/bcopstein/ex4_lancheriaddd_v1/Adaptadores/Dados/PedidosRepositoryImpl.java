@@ -25,12 +25,7 @@ public class PedidosRepositoryImpl implements IPedidosRepository {
 
     @Override
     public List<Pedido> recuperarPendentes() {
-        return pedidoJpaRepository.findByStatus(Pedido.Status.PAGO);
-    }
-
-    @Override
-    public List<Pedido> recuperarProntosParaEntrega() {
-        return pedidoJpaRepository.findByStatus(Pedido.Status.PRONTO);
+        return pedidoJpaRepository.findByStatusIn(List.of(Pedido.Status.PAGO, Pedido.Status.PREPARACAO));
     }
 
     @Override

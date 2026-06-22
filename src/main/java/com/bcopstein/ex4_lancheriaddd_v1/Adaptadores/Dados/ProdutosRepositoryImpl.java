@@ -24,7 +24,7 @@ public class ProdutosRepositoryImpl implements ProdutosRepository {
 
     @Override
     public List<Produto> recuperaProdutosCardapio(long id) {
-        // Mock implementation since Cardapio was removed
+        // Retorna todos os produtos associados a esse cardápio (simplificado)
         return produtoJpaRepository.findAll();
     }
 }

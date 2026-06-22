@@ -5,9 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperaPedidosPendentesUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.AtualizaStatusPedidoUC;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.AutenticarFuncionarioUC;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.LoginRequest;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.LoginResponse;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.PedidoResponse;
 import java.util.List;
 
@@ -16,26 +13,13 @@ import java.util.List;
 public class CozinhaController {
     private final RecuperaPedidosPendentesUC recuperaPedidosPendentesUC;
     private final AtualizaStatusPedidoUC atualizaStatusPedidoUC;
-    private final AutenticarFuncionarioUC autenticarFuncionarioUC;
-
     public CozinhaController(RecuperaPedidosPendentesUC recuperaPedidosPendentesUC,
-                             AtualizaStatusPedidoUC atualizaStatusPedidoUC,
-                             AutenticarFuncionarioUC autenticarFuncionarioUC) {
+                             AtualizaStatusPedidoUC atualizaStatusPedidoUC) {
         this.recuperaPedidosPendentesUC = recuperaPedidosPendentesUC;
         this.atualizaStatusPedidoUC = atualizaStatusPedidoUC;
-        this.autenticarFuncionarioUC = autenticarFuncionarioUC;
     }
 
-    @PostMapping("/login")
-    @CrossOrigin("*")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
-        try {
-            LoginResponse response = autenticarFuncionarioUC.run(request);
-            return ResponseEntity.ok(response);
-        } catch (SecurityException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
-    }
+
 
     @GetMapping("/pedidos")
     @CrossOrigin("*")

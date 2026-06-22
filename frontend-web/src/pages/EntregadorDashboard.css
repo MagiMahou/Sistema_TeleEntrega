@@ -1,0 +1,57 @@
+.delivery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.delivery-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-left: 5px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.delivery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delivery-header h3 {
+  font-size: 20px;
+}
+
+.delivery-body {
+  padding: 15px;
+  background: #F9F9F9;
+  border-radius: 10px;
+}
+
+.delivery-body .address {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.delivery-body .client {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.delivery-actions {
+  margin-top: auto;
+}
+
+.btn-success {
+  background: var(--success);
+  color: var(--white);
+  border-radius: 10px;
+}
+.btn-success:hover {
+  background: #009e52;
+}

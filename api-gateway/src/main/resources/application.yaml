@@ -14,7 +14,7 @@ spring:
         - id: pizzaria-service
           uri: lb://pizzaria-service
           predicates:
-            - Path=/clientes/**, /pedidos/**, /cardapio/**, /admin/**, /cozinha/**
+            - Path=/clientes/cadastro, /pedidos/**, /cardapio/**, /admin/**, /cozinha/**
         
         - id: estoque-service
           uri: lb://estoque-service

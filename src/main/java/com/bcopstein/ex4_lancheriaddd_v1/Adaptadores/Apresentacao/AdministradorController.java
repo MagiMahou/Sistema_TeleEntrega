@@ -7,37 +7,31 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.GerarRelatorioFaturamentoUC;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.AutenticarFuncionarioUC;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Requests.LoginRequest;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.LoginResponse;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.ListarPoliticasDescontoUC;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.ObterPoliticaDescontoCorrenteUC;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.DefinirPoliticaDescontoUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.RelatorioFaturamentoResponse;
-import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Servicos.IDescontoService;
 
 @RestController
 @RequestMapping("/admin")
 public class AdministradorController {
     
     private final GerarRelatorioFaturamentoUC gerarRelatorioFaturamentoUC;
-    private final AutenticarFuncionarioUC autenticarFuncionarioUC;
+    private final ListarPoliticasDescontoUC listarPoliticasDescontoUC;
+    private final ObterPoliticaDescontoCorrenteUC obterPoliticaDescontoCorrenteUC;
+    private final DefinirPoliticaDescontoUC definirPoliticaDescontoUC;
 
-    @Autowired
-    private IDescontoService descontoService;
-
-    public AdministradorController(GerarRelatorioFaturamentoUC gerarRelatorioFaturamentoUC, AutenticarFuncionarioUC autenticarFuncionarioUC) {
+    public AdministradorController(GerarRelatorioFaturamentoUC gerarRelatorioFaturamentoUC, 
+                                   ListarPoliticasDescontoUC listarPoliticasDescontoUC,
+                                   ObterPoliticaDescontoCorrenteUC obterPoliticaDescontoCorrenteUC,
+                                   DefinirPoliticaDescontoUC definirPoliticaDescontoUC) {
         this.gerarRelatorioFaturamentoUC = gerarRelatorioFaturamentoUC;
-        this.autenticarFuncionarioUC = autenticarFuncionarioUC;
+        this.listarPoliticasDescontoUC = listarPoliticasDescontoUC;
+        this.obterPoliticaDescontoCorrenteUC = obterPoliticaDescontoCorrenteUC;
+        this.definirPoliticaDescontoUC = definirPoliticaDescontoUC;
     }
 
-    @PostMapping("/login")
-    @CrossOrigin("*")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
-        try {
-            LoginResponse response = autenticarFuncionarioUC.run(request);
-            return ResponseEntity.ok(response);
-        } catch (SecurityException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
-    }
+
 
     @GetMapping("/relatorio")
     @CrossOrigin("*")
@@ -52,18 +46,18 @@ public class AdministradorController {
 
     @GetMapping("/descontos")
     public ResponseEntity<List<String>> listarPoliticas() {
-        return ResponseEntity.ok(descontoService.listarPoliticasDisponiveis());
+        return ResponseEntity.ok(listarPoliticasDescontoUC.run());
     }
 
     @GetMapping("/descontos/corrente")
     public ResponseEntity<String> getPoliticaCorrente() {
-        return ResponseEntity.ok(descontoService.getPoliticaCorrente());
+        return ResponseEntity.ok(obterPoliticaDescontoCorrenteUC.run());
     }
 
     @PatchMapping("/descontos/corrente")
     public ResponseEntity<String> definirPolitica(@RequestParam String codigo) {
         try {
-            descontoService.definirPoliticaCorrente(codigo);
+            definirPoliticaDescontoUC.run(codigo);
             return ResponseEntity.ok("Política de desconto alterada para: " + codigo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

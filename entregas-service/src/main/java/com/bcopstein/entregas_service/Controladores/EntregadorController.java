@@ -21,6 +21,18 @@ public class EntregadorController {
         this.rabbitTemplate = rabbitTemplate;
     }
 
+    @PostMapping("/login")
+    @CrossOrigin("*")
+    public ResponseEntity<Object> login(@RequestBody java.util.Map<String, String> request) {
+        String email = request.get("email");
+        String senha = request.get("senha");
+        if ("entregador@lanchonete.com".equals(email) && "entrega123".equals(senha)) {
+            String token = "simulated_entregador_token_" + java.util.UUID.randomUUID().toString();
+            return ResponseEntity.ok(java.util.Map.of("email", email, "token", token));
+        }
+        return ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).body("Credenciais inválidas para o entregador.");
+    }
+
     @GetMapping("/pendentes")
     public ResponseEntity<List<Entrega>> listarPendentes() {
         List<Entrega> pendentes = entregaRepository.findByStatus("PENDENTE");
@@ -34,12 +46,16 @@ public class EntregadorController {
             entrega.setDataHoraAtualizacao(LocalDateTime.now());
             entregaRepository.save(entrega);
             
-            // Avisar o pizzaria-service que o pedido foi entregue
             String mensagem = "Pedido " + entrega.getPedidoId() + " foi entregue";
             rabbitTemplate.convertAndSend("pedidos.entregues.fila", mensagem);
             System.out.println("📦 [ENTREGAS-SERVICE] Evento de entrega disparado: " + mensagem);
             
             return ResponseEntity.ok().body((Object) entrega);
         }).orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/historico")
+    public ResponseEntity<List<Entrega>> listarHistorico() {
+        List<Entrega> concluidas = entregaRepository.findByStatus("ENTREGUE");
+        return ResponseEntity.ok(concluidas);
     }
 }

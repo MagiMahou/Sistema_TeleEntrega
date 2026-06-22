@@ -7,4 +7,5 @@ import java.util.List;
 public interface PedidoJpaRepository extends JpaRepository<Pedido, Long> {
 
     List<Pedido> findByStatus(Pedido.Status status);
+    List<Pedido> findByStatusIn(List<Pedido.Status> statuses);
 }
