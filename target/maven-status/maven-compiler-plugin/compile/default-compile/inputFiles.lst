@@ -9,6 +9,7 @@ C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lan
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\Responses\CabecalhoCardapioResponse.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Apresentacao\PedidoController.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Servicos\IAutenticacaoService.java
+C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\DTOs\ItemBaixaDTO.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\CadastrarClienteUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ListarPedidosClienteEntreDatasUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\ImpostoServiceFixo.java
@@ -29,6 +30,7 @@ C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lan
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ListarPedidosEntreDatasUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Entidades\Perfil.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\AutenticarFuncionarioUC.java
+C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\DTOs\BaixaEstoqueRequest.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\Descontos\DescontoNenhum.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Apresentacao\Presenters\CabecalhoCardapioPresenter.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Configuracao\CargaInicialDados.java
@@ -44,7 +46,6 @@ C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lan
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Servicos\IDescontoService.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\Requests\SubmeterPedidoRequest.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\Descontos\CalculoDescontoStrategy.java
-C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ConfirmarEntregaUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\RecuperaPedidosPendentesUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Apresentacao\Presenters\CardapioPresenter.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Mensageria\RabbitMQConfig.java

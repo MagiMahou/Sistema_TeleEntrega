@@ -27,4 +27,5 @@ public class ItemEstoque {
     public long getId() { return id; }
     public Ingrediente getIngrediente() { return ingrediente; }
     public int getQuantidade() { return quantidade; }
+    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
 }

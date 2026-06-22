@@ -15,20 +15,30 @@ public class EstoqueServiceImpl implements IEstoqueService {
         this.estoqueFeignClient = estoqueFeignClient;
     }
 
+    private com.bcopstein.ex4_lancheriaddd_v1.DTOs.BaixaEstoqueRequest montarRequisicao(Pedido pedido) {
+        java.util.List<com.bcopstein.ex4_lancheriaddd_v1.DTOs.ItemBaixaDTO> itensParaBaixar = new java.util.ArrayList<>();
+        for (ItemPedido item : pedido.getItens()) {
+            itensParaBaixar.add(new com.bcopstein.ex4_lancheriaddd_v1.DTOs.ItemBaixaDTO(item.getProduto().getId(), item.getQuantidade()));
+        }
+        return new com.bcopstein.ex4_lancheriaddd_v1.DTOs.BaixaEstoqueRequest(itensParaBaixar);
+    }
+
     @Override
     public boolean verificarDisponibilidade(Pedido pedido) {
         try {
-            // Em um sistema real, seria necessario extrair os ids dos ingredientes baseados no produto.
-            // Para simplificar e compilar, usamos um ID fixo ou passamos true.
-            return estoqueFeignClient.verificarDisponibilidade(1L);
+            return estoqueFeignClient.verificarDisponibilidade(montarRequisicao(pedido));
         } catch (Exception e) {
             System.out.println("Erro ao contactar o serviço de estoque: " + e.getMessage());
-            return false; 
+            return false;
         }
     }
 
     @Override
     public void abaterEstoque(Pedido pedido) {
-        // Implementação futura do abatimento via FeignClient
+        try {
+            estoqueFeignClient.darBaixa(montarRequisicao(pedido));
+        } catch (Exception e) {
+            System.out.println("Erro ao contactar o serviço de estoque para baixa: " + e.getMessage());
+        }
     }
 }

@@ -12,7 +12,7 @@ spring:
     password: guest
 
   datasource:
-    url: jdbc:h2:mem:entregasdb
+    url: jdbc:h2:file:/app/dados/entregasdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
     driverClassName: org.h2.Driver
     username: sa
     password:
