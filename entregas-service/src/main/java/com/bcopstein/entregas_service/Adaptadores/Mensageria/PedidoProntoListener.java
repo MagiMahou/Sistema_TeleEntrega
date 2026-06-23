@@ -24,10 +24,14 @@ public class PedidoProntoListener {
             String idString = mensagem.replaceAll("[^0-9]", "");
             Long pedidoId = Long.parseLong(idString);
             
-            Entrega novaEntrega = new Entrega(pedidoId);
+            String containerId = System.getenv("HOSTNAME");
+            if (containerId == null) containerId = "Desconhecido";
+            String nomeEntregador = "Motoboy-" + containerId;
+            
+            Entrega novaEntrega = new Entrega(pedidoId, nomeEntregador);
             entregaRepository.save(novaEntrega);
             
-            System.out.println("✅ Entrega registada na base de dados (Pedido: " + pedidoId + ")");
+            System.out.println("✅ Entrega registada na base de dados (Pedido: " + pedidoId + ") por " + nomeEntregador);
         } catch (Exception e) {
             System.out.println("❌ Erro ao processar e guardar a entrega: " + e.getMessage());
         }

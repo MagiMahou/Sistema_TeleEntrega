@@ -23,10 +23,7 @@ public class AutenticarFuncionarioUC {
             String token = authService.gerarToken("admin01", Perfil.ADMINISTRADOR);
             return new LoginResponse(request.email(), token);
         }
-        if ("entregador@lanchonete.com".equals(request.email()) && "entrega123".equals(request.senha())) {
-            String token = authService.gerarToken("entregador01", Perfil.ENTREGADOR);
-            return new LoginResponse(request.email(), token);
-        }
+
         throw new SecurityException("Credenciais internas inválidas.");
     }
 }

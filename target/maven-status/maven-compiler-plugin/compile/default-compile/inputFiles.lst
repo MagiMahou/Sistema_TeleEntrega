@@ -41,6 +41,7 @@ C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lan
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Servicos\ICozinhaService.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\JPA\PedidoJpaRepository.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Integracao\EstoqueFeignClient.java
+C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ConsultarCardapioUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\Responses\PedidoResponse.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ConsultarStatusPedidoUC.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Servicos\IDescontoService.java
@@ -68,4 +69,5 @@ C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lan
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Dados\IPedidosRepository.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Dominio\Entidades\Cliente.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\ProdutosRepositoryImpl.java
+C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\Workers\CozinhaAutomationWorker.java
 C:\Users\gabri\Documents\Sistema_TeleEntrega\src\main\java\com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\CancelarPedidoUC.java

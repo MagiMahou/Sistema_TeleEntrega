@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface EntregaRepository extends JpaRepository<Entrega, Long> {
     List<Entrega> findByStatus(String status);
+    List<Entrega> findByDataHoraAtualizacaoBetween(java.time.LocalDateTime inicio, java.time.LocalDateTime fim);
 }

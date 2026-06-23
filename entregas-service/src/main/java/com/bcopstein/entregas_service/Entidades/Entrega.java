@@ -18,13 +18,15 @@ public class Entrega {
     private Long pedidoId; 
     private String status; 
     private LocalDateTime dataHoraAtualizacao;
+    private String entregadorResponsavel;
 
     public Entrega() {}
 
-    public Entrega(Long pedidoId) {
+    public Entrega(Long pedidoId, String entregadorResponsavel) {
         this.pedidoId = pedidoId;
         this.status = "PENDENTE";
         this.dataHoraAtualizacao = LocalDateTime.now();
+        this.entregadorResponsavel = entregadorResponsavel;
     }
 
     public Long getId() { return id; }
@@ -33,4 +35,6 @@ public class Entrega {
     public void setStatus(String status) { this.status = status; }
     public LocalDateTime getDataHoraAtualizacao() { return dataHoraAtualizacao; }
     public void setDataHoraAtualizacao(LocalDateTime dataHoraAtualizacao) { this.dataHoraAtualizacao = dataHoraAtualizacao; }
+    public String getEntregadorResponsavel() { return entregadorResponsavel; }
+    public void setEntregadorResponsavel(String entregadorResponsavel) { this.entregadorResponsavel = entregadorResponsavel; }
 }

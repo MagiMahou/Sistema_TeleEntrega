@@ -2,6 +2,7 @@
 INSERT INTO clientes (cpf, nome, celular, endereco, email, senha) VALUES ('9001', 'Huguinho Pato', '51985744566', 'Rua das Flores, 100', 'huguinho.pato@email.com', 'senha123');
 INSERT INTO clientes (cpf, nome, celular, endereco, email, senha) VALUES ('9002', 'Luizinho Pato', '5199172079', 'Av. Central, 200', 'zezinho.pato@email.com', 'senha123');
 INSERT INTO clientes (cpf, nome, celular, endereco, email, senha) VALUES ('00000000000', 'Administrador da Cozinha', '51988887777', 'Avenida Ipiranga, 6681', 'admin@pizzaria.com', '123');
+INSERT INTO clientes (cpf, nome, celular, endereco, email, senha) VALUES ('9003', 'Motoboy da Silva', '51988889999', 'Base da Pizzaria', 'motoboy@pizzaria.com', '123');
 
 INSERT INTO produtos (id, descricao, preco) VALUES (1, 'Pizza calabresa', 5500);
 INSERT INTO produtos (id, descricao, preco) VALUES (2, 'Pizza queijo e presunto', 6000);
