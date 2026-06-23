@@ -10,6 +10,7 @@ public interface IPedidosRepository {
     List<Pedido> recuperarAguardando();
     List<Pedido> recuperarEmPreparacao();
     List<Pedido> recuperarProntosParaEntrega();
+    List<Pedido> recuperarPorCliente(String cpf);
     Pedido recuperarPorId(long id);
     Pedido atualizar(Pedido pedido);
     List<Pedido> recuperarEntreguesEntreDatas(LocalDateTime inicio, LocalDateTime fim);

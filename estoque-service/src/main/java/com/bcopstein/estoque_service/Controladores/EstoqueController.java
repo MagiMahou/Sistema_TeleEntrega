@@ -3,6 +3,7 @@ package com.bcopstein.estoque_service.Controladores;
 import com.bcopstein.estoque_service.Entidades.ItemEstoque;
 import com.bcopstein.estoque_service.Repositorios.ItemEstoqueRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +66,18 @@ public class EstoqueController {
             ItemEstoque item = itemEstoqueRepository.findByIngredienteId(entry.getKey());
             if (item != null && item.getQuantidade() >= entry.getValue()) {
                 item.setQuantidade(item.getQuantidade() - entry.getValue());
+                itemEstoqueRepository.save(item);
+            }
+        }
+    }
+
+    @PatchMapping("/repor")
+    public void reporEstoque(@RequestBody java.util.Map<Long, Integer> reposicao) {
+        // reposicao: { idIngrediente -> quantidade_a_adicionar }
+        for (java.util.Map.Entry<Long, Integer> entry : reposicao.entrySet()) {
+            ItemEstoque item = itemEstoqueRepository.findByIngredienteId(entry.getKey());
+            if (item != null) {
+                item.setQuantidade(item.getQuantidade() + entry.getValue());
                 itemEstoqueRepository.save(item);
             }
         }

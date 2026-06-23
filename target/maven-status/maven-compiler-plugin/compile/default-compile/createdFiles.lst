@@ -67,6 +67,7 @@ com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\Impostos\CalculoImpostoStrat
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Apresentacao\Presenters\CabecalhoCardapioPresenter.class
 com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ConsultarStatusPedidoUC.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\Descontos\CalculoDescontoStrategy.class
+com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ListarPedidosClienteUC.class
 com\bcopstein\ex4_lancheriaddd_v1\Aplicacao\ListarPedidosClienteEntreDatasUC.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Dados\AutenticacaoServiceFake$Sessao.class
 com\bcopstein\ex4_lancheriaddd_v1\Adaptadores\Apresentacao\ClienteController.class

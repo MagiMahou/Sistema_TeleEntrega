@@ -19,17 +19,20 @@ public class PedidoController {
     private final ConsultarStatusPedidoUC consultarStatusPedidoUC;
     private final ListarPedidosEntreDatasUC listarPedidosEntreDatasUC;
     private final ListarPedidosClienteEntreDatasUC listarPedidosClienteEntreDatasUC;
+    private final ListarPedidosClienteUC listarPedidosClienteUC;
 
     public PedidoController(SubmeterPedidoUC submeterPedidoUC, CancelarPedidoUC cancelarPedidoUC, 
                             PagarPedidoUC pagarPedidoUC, ConsultarStatusPedidoUC consultarStatusPedidoUC,
                             ListarPedidosEntreDatasUC listarPedidosEntreDatasUC,
-                            ListarPedidosClienteEntreDatasUC listarPedidosClienteEntreDatasUC) {
+                            ListarPedidosClienteEntreDatasUC listarPedidosClienteEntreDatasUC,
+                            ListarPedidosClienteUC listarPedidosClienteUC) {
         this.submeterPedidoUC = submeterPedidoUC;
         this.cancelarPedidoUC = cancelarPedidoUC;
         this.pagarPedidoUC = pagarPedidoUC;
         this.consultarStatusPedidoUC = consultarStatusPedidoUC;
         this.listarPedidosEntreDatasUC = listarPedidosEntreDatasUC;
         this.listarPedidosClienteEntreDatasUC = listarPedidosClienteEntreDatasUC;
+        this.listarPedidosClienteUC = listarPedidosClienteUC;
     }
 
     @PostMapping("/submeter")
@@ -119,6 +122,18 @@ public class PedidoController {
             @RequestHeader(value = "token", required = false) String token) {
         try {
             List<PedidoResponse> response = listarPedidosClienteEntreDatasUC.run(cpf, inicio, fim, token);
+            return ResponseEntity.ok(response);
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+    @GetMapping("/cliente/{cpf}")
+    @CrossOrigin("*")
+    public ResponseEntity<Object> listarPorCliente(
+            @PathVariable String cpf,
+            @RequestHeader(value = "token", required = false) String token) {
+        try {
+            List<PedidoResponse> response = listarPedidosClienteUC.run(cpf, token);
             return ResponseEntity.ok(response);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

@@ -44,6 +44,13 @@ public class PedidosRepositoryImpl implements IPedidosRepository {
     }
 
     @Override
+    public List<Pedido> recuperarPorCliente(String cpf) {
+        return pedidoJpaRepository.findAll().stream()
+                .filter(p -> p.getCliente() != null && p.getCliente().getCpf().equals(cpf))
+                .toList();
+    }
+
+    @Override
     public Pedido recuperarPorId(long id) {
         return pedidoJpaRepository.findById(id).orElse(null);
     }

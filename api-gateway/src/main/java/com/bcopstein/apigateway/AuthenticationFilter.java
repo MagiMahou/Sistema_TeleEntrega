@@ -30,6 +30,14 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
+
+        if (path.contains("/estoque/repor")) {
+            if (!token.startsWith("token-admin-")) {
+                exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                return exchange.getResponse().setComplete();
+            }
+        }
+
         return chain.filter(exchange);
     }
 
