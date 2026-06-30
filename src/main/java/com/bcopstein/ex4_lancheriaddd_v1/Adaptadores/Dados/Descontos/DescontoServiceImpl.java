@@ -1,4 +1,4 @@
-package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Dados;
+package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Dados.Descontos;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Dados;
+package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Dados.Impostos;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
